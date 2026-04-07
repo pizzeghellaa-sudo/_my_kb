@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "vishwas-gopinath.md",
+                "file": "llm-knowledge-base-concept.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "vishwas-gopinath"
+              "title": "llm-knowledge-base-concept"
             }
           }
         ]
@@ -185,6 +185,9 @@
   },
   "active": "dc65a388ef02edc1",
   "lastOpenFiles": [
+    "andrej-karpathy.md",
+    "claude-code-context-management.md",
+    "vishwas-gopinath.md",
     "2026-04-07.md",
     "claude-rules.md",
     "claude-code-skills.md",
@@ -217,9 +220,6 @@
     "ai-agent-patterns.md",
     "claude-md-guide.md",
     "llms-txt.md",
-    "claude-code-fullstack.md",
-    "god-of-prompt.md",
-    "chrome-devtools-mcp.md",
-    "playwright-mcp-server.md"
+    "claude-code-fullstack.md"
   ]
 }

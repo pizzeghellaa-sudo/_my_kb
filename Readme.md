@@ -1,0 +1,1 @@
+A personal knowledge base where an LLM reads source documents once and compiles a structured, interlinked wiki — so knowledge accumulates across sessions instead of resetting each time. Originated by Andrej Karpathy and popularized via a viral GitHub Gist in April 2026.
