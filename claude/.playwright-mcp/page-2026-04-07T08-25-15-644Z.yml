@@ -1,0 +1,709 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e9]:
+      - link "Skip to main content" [ref=e10] [cursor=pointer]:
+        - /url: "#main"
+        - generic [ref=e11]: Skip to main content
+      - link "See how Frete cut frontend build time by 70%" [ref=e18] [cursor=pointer]:
+        - /url: /customer-stories/frete
+        - paragraph [ref=e22]: See how Frete cut frontend build time by 70%
+      - banner [ref=e24]:
+        - generic [ref=e25]:
+          - link "Builder.io" [ref=e26] [cursor=pointer]:
+            - /url: /
+            - img "Builder.io" [ref=e27]
+          - navigation [ref=e28]:
+            - list [ref=e29]:
+              - listitem [ref=e30]:
+                - generic [ref=e33] [cursor=pointer]: Platform
+              - listitem [ref=e35]:
+                - paragraph [ref=e39] [cursor=pointer]: Resources
+              - listitem [ref=e41]:
+                - paragraph [ref=e45] [cursor=pointer]: Docs
+              - listitem [ref=e47]:
+                - link "Enterprise" [ref=e48] [cursor=pointer]:
+                  - /url: /enterprise
+                  - paragraph [ref=e51]: Enterprise
+              - listitem [ref=e52]:
+                - link "Pricing" [ref=e53] [cursor=pointer]:
+                  - /url: /pricing
+                  - paragraph [ref=e56]: Pricing
+          - generic [ref=e58]:
+            - button "Contact sales" [ref=e59] [cursor=pointer]
+            - button "Sign up" [ref=e60] [cursor=pointer]
+  - generic [ref=e62]:
+    - button [ref=e63] [cursor=pointer]:
+      - img [ref=e64]
+    - link "‹ Back to blog" [ref=e67] [cursor=pointer]:
+      - /url: /blog
+    - generic [ref=e69]:
+      - heading "AI" [level=4] [ref=e70]
+      - heading "8 Claude Code Settings to Customize in Minutes" [level=1] [ref=e71]
+      - generic [ref=e72]:
+        - heading "March 12, 2026" [level=4] [ref=e73]
+        - heading "Written By Vishwas Gopinath" [level=4] [ref=e75]:
+          - text: Written By
+          - link "Vishwas Gopinath" [ref=e76] [cursor=pointer]:
+            - /url: /blog/authors/vishwas-gopinath
+    - generic [ref=e79]:
+      - main [ref=e81]:
+        - generic [ref=e85]:
+          - generic [ref=e87]:
+            - paragraph [ref=e88]:
+              - link "Claude Code" [ref=e89] [cursor=pointer]:
+                - /url: https://www.builder.io/blog/claude-code
+              - text: works fine out of the box. But you can do better. The gap between default Claude Code and
+              - emphasis [ref=e90]: your
+              - text: Claude Code is a handful of settings, a few hooks, and maybe ten minutes of setup.
+            - paragraph [ref=e91]: Here are 10 customizations I've found to be the most useful. You don't need to edit config files for most of these. Tell Claude what you want, and it handles the setup. I'll show the prompt-first approach for each one, with the underlying JSON for when you want to understand what's happening or tweak things manually.
+            - button "Copy link to \"1. Set up the cc alias\" section" [ref=e92] [cursor=pointer]:
+              - text: 1. Set up the
+              - code [ref=e93]: cc
+              - text: alias
+            - paragraph [ref=e94]:
+              - text: This is how I start every Claude session. Open your
+              - code [ref=e95]: ~/.zshrc
+              - text: (or
+              - code [ref=e96]: ~/.bashrc
+              - text: "if you use Bash) in any editor and add this line:"
+          - code [ref=e101]: alias cc='claude --dangerously-skip-permissions'
+          - paragraph [ref=e104]: "Or append it from the terminal without opening the file:"
+          - code [ref=e109]: echo "alias cc='claude --dangerously-skip-permissions'" >> ~/.zshrc
+          - generic [ref=e111]:
+            - paragraph [ref=e112]:
+              - text: Then run
+              - code [ref=e113]: source ~/.zshrc
+              - text: to load it in your current session. Every new terminal window will pick it up automatically after this.
+            - paragraph [ref=e114]:
+              - text: Now you type
+              - code [ref=e115]: cc
+              - text: instead of
+              - code [ref=e116]: claude
+              - text: ", and you skip every permission prompt. You can also pass"
+              - code [ref=e117]: "-c"
+              - text: "for quick one-shot commands:"
+          - code [ref=e122]: "# Quick one-liner: generate a commit message cc -c \"write a commit message for the staged changes\" # Pipe in context cat error.log | cc \"explain this error and suggest a fix\""
+          - paragraph [ref=e125]: "I have a few more aliases that I reach for constantly:"
+          - code [ref=e130]: "# Start in plan mode for research (read-only, no edits) alias ccp='claude --permission-mode plan' # Resume the last session alias ccr='claude --resume'"
+          - generic [ref=e132]:
+            - paragraph [ref=e133]:
+              - text: The
+              - code [ref=e134]: "--dangerously-skip-permissions"
+              - text: flag name is intentionally scary. It lets Claude run any command and edit any file without asking. Only consider this after a few months of daily use, when you fully understand what Claude Code can and will do to your codebase. I've used it long enough to make that call, but use it at your own risk.
+            - button "Copy link to \"2. Auto-compact before context degrades\" section" [ref=e135] [cursor=pointer]: 2. Auto-compact before context degrades
+            - paragraph [ref=e136]:
+              - text: Claude's context window is its working memory. As it fills up, Claude starts losing track of earlier details and quality drops. The default auto-compaction threshold is
+              - strong [ref=e137]: ~95%
+              - text: . By then, you've already lost coherence.
+            - paragraph [ref=e138]: "Just tell Claude:"
+          - blockquote [ref=e141]:
+            - paragraph [ref=e142]: Set my auto-compact threshold to 75% in my user settings
+          - paragraph [ref=e145]:
+            - text: Claude will update
+            - code [ref=e146]: ~/.claude/settings.json
+            - text: "for you. Under the hood, it adds this:"
+          - code [ref=e151]: "{ \"env\": { \"CLAUDE_AUTOCOMPACT_PCT_OVERRIDE\": \"75\" } }"
+          - generic [ref=e153]:
+            - paragraph [ref=e154]: There's no consensus on the right number. 60-75% works well for most tasks, but if you're working on something that needs a lot of context, 85% gives Claude more room before compacting kicks in. Try a value and adjust based on how your sessions feel.
+            - paragraph [ref=e155]:
+              - text: The two context commands to know are
+              - code [ref=e156]: /clear
+              - text: (wipes everything, starts fresh) and
+              - code [ref=e157]: /compact
+              - text: (summarizes history, keeps key details). Use
+              - code [ref=e158]: /clear
+              - text: when switching to a completely different task. Use
+              - code [ref=e159]: /compact
+              - text: when you're mid-feature but the conversation is getting long.
+            - paragraph [ref=e160]:
+              - text: You can also tell Claude what to preserve during compaction. Add this to your
+              - link "CLAUDE.md" [ref=e161] [cursor=pointer]:
+                - /url: http://claude.md/
+              - text: ":"
+          - code [ref=e166]: "When compacting, always preserve: - Current file paths being edited - Test failure messages - Architecture decisions made this session"
+          - generic [ref=e168]:
+            - paragraph [ref=e169]:
+              - text: This way, when
+              - code [ref=e170]: /compact
+              - text: runs (manually or automatically), the important context survives.
+            - button "Copy link to \"3. Write your personal CLAUDE.md\" section" [ref=e171] [cursor=pointer]: 3. Write your personal CLAUDE.md
+            - paragraph [ref=e172]: CLAUDE.md has more impact on Claude's behavior than any other customization. It's how you tell Claude what you care about, and it persists across every session.
+            - paragraph [ref=e173]:
+              - text: Your personal CLAUDE.md lives at
+              - code [ref=e174]: ~/.claude/CLAUDE.md
+              - text: "and applies to every project. Just tell Claude what you want. For example:"
+          - blockquote [ref=e177]:
+            - paragraph [ref=e178]: Create my personal CLAUDE.md at ~/.claude/CLAUDE.md. I prefer pnpm over npm, types over interfaces, Vitest over Jest, and concise PR descriptions.
+          - paragraph [ref=e181]: "Claude will create the file. Here's roughly what you'd get:"
+          - code [ref=e186]: "# Global preferences - Use pnpm, not npm - Prefer types over interfaces - When writing tests, use Vitest not Jest - Keep PR descriptions concise — summary + test plan only"
+          - generic [ref=e188]:
+            - paragraph [ref=e189]:
+              - text: Keep it
+              - strong [ref=e190]: under 50 lines
+              - text: . Instruction compliance drops sharply with length. Specific, concise rules ("use pnpm, not npm") get ~89% compliance, while vague instructions ("write clean code") hover around ~35%.
+            - paragraph [ref=e191]:
+              - text: For project-level instructions, you can run
+              - code [ref=e192]: /init
+              - text: to generate a CLAUDE.md in your repo. The output tends to be bloated though so trim it heavily and keep only what matters. For the full deep-dive on scoping, rules directories, and team-shared conventions, see
+              - link "how to write a great CLAUDE.md file" [ref=e193] [cursor=pointer]:
+                - /url: https://www.builder.io/blog/claude-md-guide
+              - text: .
+            - button "Copy link to \"4. Add a live status line\" section" [ref=e194] [cursor=pointer]: 4. Add a live status line
+            - paragraph [ref=e195]:
+              - text: The status line is a
+              - strong [ref=e196]: shell script
+              - text: that runs after every Claude turn. It displays live information at the bottom of your terminal, like a dashboard for your session.
+            - paragraph [ref=e197]:
+              - text: The fastest way to set one up is
+              - code [ref=e198]: /statusline
+              - text: inside Claude Code. It'll ask what you want to display and generate the script for you.
+            - paragraph [ref=e199]: "If you'd rather build your own, here's the script I use. It shows the current directory, git branch with dirty status, and context usage color-coded by how full the window is (green < 50%, yellow 50-80%, red > 80%):"
+          - code [ref=e204]: "#!/bin/bash input=$(cat) # Extract data from JSON cwd=$(echo \"$input\" | jq -r '.workspace.current_dir') input_tokens=$(echo \"$input\" | jq -r '.context_window.current_usage.input_tokens // 0') cache_creation=$(echo \"$input\" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0') cache_read=$(echo \"$input\" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0') context_window_size=$(echo \"$input\" | jq -r '.context_window.context_window_size // empty') current_dir=$(basename \"$cwd\") # Git branch + dirty status git_info=\"\" if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" --no-optional-locks branch --show-current 2>/dev/null) if [ -n \"$branch\" ]; then if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" git:($branch)✗\" else git_info=\" git:($branch)\" fi fi fi # Context usage with color coding context_info=\"\" ctx_color=\"\" total_input=$((input_tokens + cache_creation + cache_read)) if [ \"$total_input\" -gt 0 ] && [ -n \"$context_window_size\" ] && [ \"$context_window_size\" -gt 0 ]; then input_k=$(printf \"%.0f\" \"$(echo \"$total_input / 1000\" | bc -l)\") window_k=$(printf \"%.0f\" \"$(echo \"$context_window_size / 1000\" | bc -l)\") percentage=$(( (total_input * 100 + context_window_size / 2) / context_window_size )) context_info=\" ctx:${input_k}k/${window_k}k (${percentage}%)\" if [ \"$percentage\" -lt 50 ]; then ctx_color=\"\\\\033[32m\" elif [ \"$percentage\" -lt 80 ]; then ctx_color=\"\\\\033[33m\" else ctx_color=\"\\\\033[31m\"; fi fi printf \"\\\\033[36m%s\\\\033[0m\" \"$current_dir\" [ -n \"$git_info\" ] && printf \"\\\\033[34m%s\\\\033[0m\" \"$git_info\" [ -n \"$context_info\" ] && printf \"${ctx_color}%s\\\\033[0m\" \"$context_info\""
+          - paragraph [ref=e207]: "Then tell Claude:"
+          - blockquote [ref=e210]:
+            - paragraph [ref=e211]: Save the above script to ~/.claude/statusline-command.sh, make it executable, and set it as my status line in user settings
+          - generic [ref=e213]:
+            - paragraph [ref=e214]: The script receives a JSON object on stdin with your session data. You can display whatever combination matters to you. Some people show the active model, others show cost-per-session.
+            - paragraph [ref=e215]:
+              - text: Community tools like
+              - code [ref=e216]: ccstatusline
+              - text: and
+              - code [ref=e217]: starship-claude
+              - text: also offer pre-built templates if you don't want to write your own.
+            - button "Copy link to \"5. Auto-format on every edit\" section" [ref=e218] [cursor=pointer]: 5. Auto-format on every edit
+            - paragraph [ref=e219]: Every time Claude edits a file, your formatter should run automatically. Your code stays formatted every time.
+            - paragraph [ref=e220]: "Tell Claude:"
+          - blockquote [ref=e223]:
+            - paragraph [ref=e224]: Set up a PostToolUse hook in the project settings that runs Prettier on any file after you edit or write it
+          - paragraph [ref=e227]:
+            - text: This creates a
+            - code [ref=e228]: PostToolUse
+            - text: "hook that fires after Edit or Write operations:"
+          - code [ref=e233]: "{ \"hooks\": { \"PostToolUse\": [ { \"matcher\": \"Edit|Write\", \"hooks\": [ { \"type\": \"command\", \"command\": \"npx prettier --write \\\\\"$CLAUDE_FILE_PATH\\\\\" 2>/dev/null || true\" } ] } ] } }"
+          - paragraph [ref=e236]:
+            - text: "You can also chain other tools: linters, type checkers, or even a quick test run. Just add more entries to the"
+            - code [ref=e237]: hooks
+            - text: "array. For example, you could run ESLint right after Prettier:"
+          - code [ref=e242]: "{ \"matcher\": \"Edit|Write\", \"hooks\": [ { \"type\": \"command\", \"command\": \"npx prettier --write \\\\\"$CLAUDE_FILE_PATH\\\\\" 2>/dev/null || true\" }, { \"type\": \"command\", \"command\": \"npx eslint --fix \\\\\"$CLAUDE_FILE_PATH\\\\\" 2>/dev/null || true\" } ] }"
+          - generic [ref=e244]:
+            - paragraph [ref=e245]:
+              - text: Add this to your project's
+              - code [ref=e246]: .claude/settings.json
+              - text: since formatters are project-specific. The
+              - code [ref=e247]: "|| true"
+              - text: at the end prevents hook failures from blocking Claude. You want formatting to be best-effort.
+            - button "Copy link to \"6. Customize the spinner verbs\" section" [ref=e248] [cursor=pointer]: 6. Customize the spinner verbs
+            - paragraph [ref=e249]: While Claude thinks, the terminal shows a spinner with verbs like "Flibbertigibbeting..." and "Flummoxing...". You can replace them with whatever you want.
+            - paragraph [ref=e250]: "Tell Claude:"
+          - blockquote [ref=e253]:
+            - paragraph [ref=e254]: "Replace my spinner verbs in user settings with these:"
+          - paragraph [ref=e257]:
+            - text: Under the hood, this adds to
+            - code [ref=e258]: ~/.claude/settings.json
+            - text: ":"
+          - code [ref=e263]: "{ \"spinnerVerbs\": { \"mode\": \"replace\", \"verbs\": [ \"Hallucinating responsibly\", \"Pretending to think\", \"Confidently guessing\", \"Blaming the context window\", \"Consulting my imagination\", \"Speedrunning your tech debt\", \"Overthinking this\", \"Apologizing in advance\", \"Vibing with your codebase\", \"Submitting my best guess\" ] } }"
+          - generic [ref=e265]:
+            - paragraph [ref=e266]:
+              - text: Use
+              - code [ref=e267]: append
+              - text: instead of
+              - code [ref=e268]: replace
+              - text: if you want your verbs mixed in with the defaults.
+            - paragraph [ref=e269]: "You don't have to provide a list either. Just tell Claude what vibe you're going for:"
+          - blockquote [ref=e272]:
+            - paragraph [ref=e273]: Replace my spinner verbs with Harry Potter spells
+          - generic [ref=e275]:
+            - paragraph [ref=e276]: Claude will generate the list for you. It's a small thing that makes the wait more fun.
+            - paragraph [ref=e277]:
+              - text: You can also customize the
+              - strong [ref=e278]: spinner tips
+              - text: (the helpful hints shown while waiting) with
+              - code [ref=e279]: spinnerTipsOverride
+              - text: and toggle them with
+              - code [ref=e280]: spinnerTipsEnabled
+              - text: .
+            - button "Copy link to \"7. Play a sound when Claude finishes\" section" [ref=e281] [cursor=pointer]: 7. Play a sound when Claude finishes
+            - paragraph [ref=e282]: This one changed how I work with Claude Code. I kick off a task, switch to something else, and hear a sound when Claude's done. It sounds small, but you go from "sitting and waiting" to "multitasking and getting pinged."
+            - paragraph [ref=e283]:
+              - text: You can set this up interactively with
+              - code [ref=e284]: /hooks
+              - text: ", or just tell Claude:"
+          - blockquote [ref=e287]:
+            - paragraph [ref=e288]: Set up a Stop hook in my user settings that plays the Glass sound when you finish responding. Use afplay on macOS.
+          - paragraph [ref=e291]:
+            - text: Hooks are shell commands that execute automatically at specific points in Claude Code's lifecycle. The
+            - code [ref=e292]: Stop
+            - text: hook fires when Claude finishes a response. Here's what Claude adds to
+            - code [ref=e293]: ~/.claude/settings.json
+            - text: ":"
+          - code [ref=e298]: "{ \"hooks\": { \"Stop\": [ { \"matcher\": \"*\", \"hooks\": [ { \"type\": \"command\", \"command\": \"/usr/bin/afplay /System/Library/Sounds/Glass.aiff\" } ] } ] } }"
+          - generic [ref=e300]:
+            - paragraph [ref=e301]:
+              - code [ref=e302]: afplay
+              - text: is macOS's built-in audio player. The sound files live in
+              - code [ref=e303]: /System/Library/Sounds/
+              - text: .
+            - paragraph [ref=e304]:
+              - text: Here are the
+              - strong [ref=e305]: macOS system sounds
+              - text: you can pick from. Swap the filename to use a different one.
+            - list [ref=e306]:
+              - listitem [ref=e307]:
+                - code [ref=e308]: Glass.aiff
+                - text: — clean, subtle
+              - listitem [ref=e309]:
+                - code [ref=e310]: Submarine.aiff
+                - text: — deep, satisfying
+              - listitem [ref=e311]:
+                - code [ref=e312]: Purr.aiff
+                - text: — gentle
+              - listitem [ref=e313]:
+                - code [ref=e314]: Funk.aiff
+                - text: — playful
+              - listitem [ref=e315]:
+                - code [ref=e316]: Pop.aiff
+                - text: — quick, snappy
+              - listitem [ref=e317]:
+                - code [ref=e318]: Frog.aiff
+                - text: — memorable
+              - listitem [ref=e319]:
+                - code [ref=e320]: Hero.aiff
+                - text: — triumphant
+            - paragraph [ref=e321]:
+              - text: You're not limited to system sounds either. The hook just runs
+              - code [ref=e322]: afplay
+              - text: ", which can play any"
+              - code [ref=e323]: .aiff
+              - text: ","
+              - code [ref=e324]: .mp3
+              - text: ", or"
+              - code [ref=e325]: .wav
+              - text: file on your machine. Download any sound effect, save it to
+              - code [ref=e326]: ~/.claude/sounds/
+              - text: ", and use that path instead."
+            - paragraph [ref=e327]: For the complete hooks reference including more patterns and gotchas, see Claude Code hooks.
+            - button "Copy link to \"8. Set your output style\" section" [ref=e328] [cursor=pointer]: 8. Set your output style
+            - paragraph [ref=e329]:
+              - text: Output styles control how Claude formats its responses. Run
+              - code [ref=e330]: /config
+              - text: "and select your preferred style, or tell Claude:"
+          - blockquote [ref=e333]:
+            - paragraph [ref=e334]: Set my output style to Concise
+          - generic [ref=e336]:
+            - paragraph [ref=e337]: "The built-in options are:"
+            - list [ref=e338]:
+              - listitem [ref=e339]:
+                - strong [ref=e340]: Explanatory
+                - text: for detailed, step-by-step responses (good for learning)
+              - listitem [ref=e341]:
+                - strong [ref=e342]: Concise
+                - text: for brief, action-focused responses (good for shipping)
+              - listitem [ref=e343]:
+                - strong [ref=e344]: Technical
+                - text: for precise, jargon-friendly responses (good for deep work)
+            - paragraph [ref=e345]:
+              - text: You can also create
+              - strong [ref=e346]: custom output styles
+              - text: as files in
+              - code [ref=e347]: ~/.claude/output-styles/
+              - text: . You can create a "code-review" style that's terse and finding-focused, or a "documentation" style that's thorough and structured. Create a markdown file with YAML frontmatter defining the style, and it shows up as an option in
+              - code [ref=e348]: /config
+              - text: .
+            - paragraph [ref=e349]:
+              - text: Two other settings worth knowing.
+              - code [ref=e350]: showTurnDuration
+              - text: displays how long each response took (useful for spotting when a model switch might help), and
+              - code [ref=e351]: prefersReducedMotion
+              - text: tones down animations for accessibility.
+            - button "Copy link to \"Wrapping up\" section" [ref=e352] [cursor=pointer]: Wrapping up
+            - paragraph [ref=e353]:
+              - text: Start with one customization that solves your biggest annoyance. The
+              - code [ref=e354]: cc
+              - text: alias (#1) is a popular starting point. Then work your way through the rest as you hit friction.
+            - paragraph [ref=e355]:
+              - text: "Most of these are a prompt away. Tell Claude what you want, and it'll set it up. Under the hood, everything lives in three places: your shell profile (aliases),"
+              - code [ref=e356]: ~/.claude/settings.json
+              - text: (global settings and hooks), and
+              - code [ref=e357]: ~/.claude/CLAUDE.md
+              - text: (instructions). That's it.
+            - paragraph [ref=e358]:
+              - text: Once you've got these basics dialed in,
+              - link "MCP servers" [ref=e359] [cursor=pointer]:
+                - /url: https://www.builder.io/blog/claude-code-mcp
+              - text: are worth exploring next. They connect Claude to external tools like databases and browser automation (the
+              - link "Playwright MCP server" [ref=e360] [cursor=pointer]:
+                - /url: https://www.builder.io/blog/claude-code-playwright-mcp-server
+              - text: is a good first one to try). But these 10 customizations cover what you'll use every day.
+            - button "Copy link to \"FAQ\" section" [ref=e361] [cursor=pointer]: FAQ
+            - paragraph [ref=e362]:
+              - strong [ref=e363]: Where do Claude Code settings live?
+            - paragraph [ref=e364]:
+              - text: "Three locations:"
+              - code [ref=e365]: ~/.claude/settings.json
+              - text: for your personal global settings,
+              - code [ref=e366]: .claude/settings.json
+              - text: in your project root for team-shared settings (committed to git), and
+              - code [ref=e367]: .claude/settings.local.json
+              - text: for personal project overrides (gitignored). Run
+              - code [ref=e368]: /status
+              - text: to see which layers are active.
+            - paragraph [ref=e369]:
+              - strong [ref=e370]: How do I track Claude Code costs?
+            - paragraph [ref=e371]:
+              - text: Use
+              - code [ref=e372]: /cost
+              - text: within a session for API spending (API key users) or
+              - code [ref=e373]: /stats
+              - text: for usage against your subscription quota (Claude Max/Pro subscribers). For analytics across sessions,
+              - code [ref=e374]: ccusage
+              - text: (
+              - code [ref=e375]: npx ccusage@latest
+              - text: ) provides breakdowns by model, project, and time period from local JSONL files. Menu bar apps like
+              - link "Usagebar" [ref=e376] [cursor=pointer]:
+                - /url: https://usagebar.com/
+              - text: give you always-visible tracking.
+            - paragraph [ref=e377]:
+              - strong [ref=e378]: How do I reset Claude Code to default settings?
+            - paragraph [ref=e379]:
+              - text: "Delete or rename your settings files:"
+              - code [ref=e380]: ~/.claude/settings.json
+              - text: (user),
+              - code [ref=e381]: .claude/settings.json
+              - text: (project),
+              - code [ref=e382]: .claude/settings.local.json
+              - text: (local). Claude Code loads built-in defaults on your next session. If you only want to reset one scope, remove just that file.
+            - paragraph [ref=e383]:
+              - strong [ref=e384]: Can I share my customizations with my team?
+            - paragraph [ref=e385]:
+              - text: Yes. Commit
+              - code [ref=e386]: .claude/settings.json
+              - text: and
+              - code [ref=e387]: .claude/skills/
+              - text: to your repository for project-level sharing. For broader distribution, create a plugin that bundles your settings, skills, and hooks, then share it via a marketplace. Use
+              - code [ref=e388]: /plugin
+              - text: to browse and install existing plugins.
+        - generic [ref=e392]:
+          - generic [ref=e394]:
+            - heading "Design and code in one platform" [level=3] [ref=e397]
+            - paragraph [ref=e400]: Builder.io visually edits code, uses your design system, and sends pull requests.
+            - generic [ref=e401]:
+              - button "Try Builder" [ref=e402] [cursor=pointer]
+              - button "Get a demo" [ref=e403] [cursor=pointer]
+          - generic [ref=e407]:
+            - paragraph [ref=e411]: NEW! Fusion
+            - generic [ref=e412]: What should we build?
+            - generic [ref=e416]:
+              - generic [ref=e417]:
+                - generic [ref=e418]:
+                  - textbox [ref=e419]
+                  - generic: Ask Visual Copilot to build|
+                - generic [ref=e420]:
+                  - button "Attach" [ref=e421] [cursor=pointer]:
+                    - img [ref=e422]
+                    - text: Attach
+                  - button [disabled] [ref=e424]:
+                    - img [ref=e425]
+              - generic [ref=e429]:
+                - link "GitHub Connect a Repo" [ref=e431] [cursor=pointer]:
+                  - /url: https://builder.io/app/projects/github/connect?fusion=true
+                  - img "GitHub" [ref=e432]
+                  - text: Connect a Repo
+                - button "Figma Figma Import" [ref=e433] [cursor=pointer]:
+                  - img "Figma" [ref=e434]
+                  - text: Figma Import
+                - button "MCP MCP Servers" [ref=e435] [cursor=pointer]:
+                  - img "MCP" [ref=e436]
+                  - text: MCP Servers
+                - button "Cursor Extension VS Code Extension Get Extension" [ref=e437] [cursor=pointer]:
+                  - img "Cursor Extension" [ref=e438]
+                  - img "VS Code Extension" [ref=e439]
+                  - text: Get Extension
+      - generic [ref=e440]:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - paragraph: Ship 4x faster with the AI frontend engineer
+                      - generic:
+                        - generic:
+                          - paragraph: Design, prototype, and ship production changes within your existing sites and applications.
+                      - generic:
+                        - button "Try it now"
+                        - button "Get a demo"
+  - generic [ref=e441]:
+    - generic [ref=e442]:
+      - generic [ref=e443]: Continue Reading
+      - generic [ref=e444]:
+        - 'link "AI6 MIN When Enterprise AI Development Gets Real: Five Friction Points, Five Fixes WRITTEN BYAmy Cross April 6, 2026" [ref=e445] [cursor=pointer]':
+          - /url: /blog/five-friction-points-five-fixes
+          - generic [ref=e449]:
+            - generic [ref=e450]:
+              - text: AI
+              - generic [ref=e451]: 6 MIN
+            - generic [ref=e452]: "When Enterprise AI Development Gets Real: Five Friction Points, Five Fixes"
+            - generic [ref=e453]: WRITTEN BYAmy Cross
+            - generic [ref=e454]: April 6, 2026
+        - link "Design8 MIN How to Use Figma's Remote MCP WRITTEN BYAlice Moore April 2, 2026" [ref=e455] [cursor=pointer]:
+          - /url: /blog/figma-remote-mcp
+          - generic [ref=e459]:
+            - generic [ref=e460]:
+              - text: Design
+              - generic [ref=e461]: 8 MIN
+            - generic [ref=e462]: How to Use Figma's Remote MCP
+            - generic [ref=e463]: WRITTEN BYAlice Moore
+            - generic [ref=e464]: April 2, 2026
+        - link "AI6 MIN You Optimized the Wrong 0.6% WRITTEN BYAmy Cross March 31, 2026" [ref=e465] [cursor=pointer]:
+          - /url: /blog/you-optimized-the-wrong-06
+          - generic [ref=e469]:
+            - generic [ref=e470]:
+              - text: AI
+              - generic [ref=e471]: 6 MIN
+            - generic [ref=e472]: You Optimized the Wrong 0.6%
+            - generic [ref=e473]: WRITTEN BYAmy Cross
+            - generic [ref=e474]: March 31, 2026
+    - contentinfo [ref=e475]:
+      - generic [ref=e489]:
+        - generic [ref=e496]:
+          - heading "Get the latest from Builder.io" [level=3] [ref=e499]
+          - generic [ref=e500]:
+            - generic [ref=e501]:
+              - generic [ref=e505] [cursor=pointer]:
+                - paragraph [ref=e508]: Dev Drop Newsletter
+                - paragraph [ref=e511]: News, tips, and tricks from Builder, for frontend developers.
+              - generic [ref=e515] [cursor=pointer]:
+                - paragraph [ref=e518]: Product Newsletter
+                - paragraph [ref=e521]: Latest features and updates on the Builder.io platform
+            - generic [ref=e522]:
+              - textbox "Enter your email *" [ref=e523]
+              - button "Submit" [ref=e524] [cursor=pointer]
+            - link "By submitting, you agree to our Privacy Policy" [ref=e526] [cursor=pointer]:
+              - /url: https://builder.io/docs/privacy
+              - paragraph [ref=e528]: By submitting, you agree to our Privacy Policy
+        - contentinfo [ref=e529]:
+          - generic [ref=e530]:
+            - generic [ref=e536]:
+              - generic [ref=e537]:
+                - generic [ref=e538]:
+                  - heading "Platform" [level=3] [ref=e541]
+                  - list [ref=e542]:
+                    - listitem [ref=e543]:
+                      - link "Fusion" [ref=e544] [cursor=pointer]:
+                        - /url: /fusion
+                        - paragraph [ref=e546]: Fusion
+                    - listitem [ref=e547]:
+                      - link "Publish" [ref=e548] [cursor=pointer]:
+                        - /url: /publish
+                        - paragraph [ref=e550]: Publish
+                    - listitem [ref=e551]:
+                      - link "Product Updates" [ref=e552] [cursor=pointer]:
+                        - /url: /updates
+                        - paragraph [ref=e554]: Product Updates
+                - generic [ref=e555]:
+                  - paragraph [ref=e558]: Use Cases
+                  - list [ref=e559]:
+                    - listitem [ref=e560]:
+                      - link "Design to Code" [ref=e561] [cursor=pointer]:
+                        - /url: /m/design-to-code
+                        - paragraph [ref=e563]: Design to Code
+                    - listitem [ref=e564]:
+                      - link "Headless CMS" [ref=e565] [cursor=pointer]:
+                        - /url: /headless-cms
+                        - paragraph [ref=e567]: Headless CMS
+                      - link "Multi-Brand CMS" [ref=e568] [cursor=pointer]:
+                        - /url: /m/multi-brand-cms
+                        - paragraph [ref=e570]: Multi-Brand CMS
+                    - listitem [ref=e571]:
+                      - link "Landing Pages" [ref=e572] [cursor=pointer]:
+                        - /url: /landing-pages
+                        - paragraph [ref=e574]: Landing Pages
+                    - listitem [ref=e575]:
+                      - link "Web Apps" [ref=e576] [cursor=pointer]:
+                        - /url: /web-apps
+                        - paragraph [ref=e578]: Web Apps
+                    - listitem [ref=e579]:
+                      - link "Prototypes" [ref=e580] [cursor=pointer]:
+                        - /url: /prototypes
+                        - paragraph [ref=e582]: Prototypes
+                    - listitem [ref=e583]:
+                      - link "Marketing Sites" [ref=e584] [cursor=pointer]:
+                        - /url: /m/marketing-sites
+                        - paragraph [ref=e586]: Marketing Sites
+                    - listitem [ref=e587]:
+                      - link "Headless Commerce" [ref=e588] [cursor=pointer]:
+                        - /url: /m/headless-commerce
+                        - paragraph [ref=e590]: Headless Commerce
+              - generic [ref=e591]:
+                - generic [ref=e592]:
+                  - heading "Developer Resources" [level=3] [ref=e595]
+                  - list [ref=e596]:
+                    - listitem [ref=e597]:
+                      - link "Documentation" [ref=e598] [cursor=pointer]:
+                        - /url: /c/docs/developers
+                        - paragraph [ref=e600]: Documentation
+                    - listitem [ref=e601]:
+                      - link "Fusion Docs" [ref=e602] [cursor=pointer]:
+                        - /url: /c/docs/get-started-fusion
+                        - paragraph [ref=e604]: Fusion Docs
+                    - listitem [ref=e605]:
+                      - link "Publish Docs" [ref=e606] [cursor=pointer]:
+                        - /url: /c/docs/get-started-publish
+                        - paragraph [ref=e608]: Publish Docs
+                - generic [ref=e609]:
+                  - heading "Frameworks" [level=3] [ref=e612]
+                  - list [ref=e613]:
+                    - listitem [ref=e614]:
+                      - generic [ref=e615] [cursor=pointer]:
+                        - paragraph [ref=e618]: Design to Code
+                        - paragraph [ref=e621]: ">"
+                    - listitem [ref=e623]:
+                      - generic [ref=e624] [cursor=pointer]:
+                        - paragraph [ref=e627]: CMS
+                        - paragraph [ref=e630]: ">"
+                    - listitem [ref=e632]:
+                      - generic [ref=e633] [cursor=pointer]:
+                        - paragraph [ref=e636]: Page Builder
+                        - paragraph [ref=e639]: ">"
+                - generic [ref=e641]:
+                  - paragraph [ref=e644]: Workflows
+                  - list [ref=e645]:
+                    - listitem [ref=e646]:
+                      - link "Figma AI to Production Code" [ref=e647] [cursor=pointer]:
+                        - /url: /workflows/figma-ai
+                        - paragraph [ref=e649]: Figma AI to Production Code
+                    - listitem [ref=e650]:
+                      - link "AI Prototyping for Product Managers" [ref=e651] [cursor=pointer]:
+                        - /url: /workflows/ai-prototyping-product-managers
+                        - paragraph [ref=e653]: AI Prototyping for Product Managers
+                    - listitem [ref=e654]:
+                      - link "Figma to Storybook" [ref=e655] [cursor=pointer]:
+                        - /url: /workflows/figma-to-storybook
+                        - paragraph [ref=e657]: Figma to Storybook
+                    - listitem [ref=e658]:
+                      - link "Figma to App Converter" [ref=e659] [cursor=pointer]:
+                        - /url: /workflows/figma-to-app
+                        - paragraph [ref=e661]: Figma to App Converter
+              - generic [ref=e662]:
+                - generic [ref=e664]:
+                  - heading "Resources" [level=3] [ref=e667]
+                  - list [ref=e668]:
+                    - listitem [ref=e669]:
+                      - link "Blog" [ref=e670] [cursor=pointer]:
+                        - /url: /blog
+                        - paragraph [ref=e672]: Blog
+                    - listitem [ref=e673]:
+                      - link "Webinars" [ref=e674] [cursor=pointer]:
+                        - /url: /hub/home?resource-type=webinars
+                        - paragraph [ref=e676]: Webinars
+                    - listitem [ref=e677]:
+                      - link "Guides" [ref=e678] [cursor=pointer]:
+                        - /url: /hub/home?resource-type=guides
+                        - paragraph [ref=e680]: Guides
+                    - listitem [ref=e681]:
+                      - link "Case Studies" [ref=e682] [cursor=pointer]:
+                        - /url: /hub/home?resource-type=customer+stories
+                        - paragraph [ref=e684]: Case Studies
+                    - listitem [ref=e685]:
+                      - link "Community Forum" [ref=e686] [cursor=pointer]:
+                        - /url: https://forum.builder.io/
+                        - paragraph [ref=e688]: Community Forum
+                    - listitem [ref=e689]:
+                      - link "Partners" [ref=e690] [cursor=pointer]:
+                        - /url: /m/partners
+                        - paragraph [ref=e692]: Partners
+                    - listitem [ref=e693]:
+                      - link "Affiliate Program" [ref=e694] [cursor=pointer]:
+                        - /url: /affiliate
+                        - paragraph [ref=e696]: Affiliate Program
+                    - listitem [ref=e697]:
+                      - link "CMS Integrations" [ref=e698] [cursor=pointer]:
+                        - /url: /m/integrations
+                        - paragraph [ref=e700]: CMS Integrations
+                    - listitem [ref=e701]:
+                      - link "CMS Blueprints" [ref=e702] [cursor=pointer]:
+                        - /url: /c/blueprints
+                        - paragraph [ref=e704]: CMS Blueprints
+                    - listitem [ref=e705]:
+                      - link "Explainers" [ref=e706] [cursor=pointer]:
+                        - /url: /explainers
+                        - paragraph [ref=e708]: Explainers
+                    - listitem [ref=e709]:
+                      - link "Glossary" [ref=e710] [cursor=pointer]:
+                        - /url: /glossary
+                        - paragraph [ref=e712]: Glossary
+                    - listitem [ref=e713]:
+                      - link "Agent-Native" [ref=e714] [cursor=pointer]:
+                        - /url: https://agent-native.com/
+                        - paragraph [ref=e716]: Agent-Native
+                - generic [ref=e717]:
+                  - generic [ref=e718]:
+                    - heading "Popular Guides" [level=3] [ref=e721]
+                    - list [ref=e722]:
+                      - listitem [ref=e723]:
+                        - link "Figma to Code Guide" [ref=e724] [cursor=pointer]:
+                          - /url: /hub/guides/figma-design-to-code
+                          - paragraph [ref=e726]: Figma to Code Guide
+                      - listitem [ref=e727]:
+                        - link "Headless CMS Guide" [ref=e728] [cursor=pointer]:
+                          - /url: /m/knowledge-center/headless-cms-visual-guide
+                          - paragraph [ref=e730]: Headless CMS Guide
+                      - listitem [ref=e731]:
+                        - link "Headless Commerce Guide" [ref=e732] [cursor=pointer]:
+                          - /url: /m/knowledge-center/headless-commerce
+                          - paragraph [ref=e734]: Headless Commerce Guide
+                      - listitem [ref=e735]:
+                        - link "Composable DXP Guide" [ref=e736] [cursor=pointer]:
+                          - /url: /m/explainers/composable-dxp
+                          - paragraph [ref=e738]: Composable DXP Guide
+                  - generic [ref=e739]:
+                    - heading "Company" [level=3] [ref=e742]
+                    - list [ref=e743]:
+                      - listitem [ref=e744]:
+                        - link "About" [ref=e745] [cursor=pointer]:
+                          - /url: /m/about-us
+                          - paragraph [ref=e747]: About
+                      - listitem [ref=e748]:
+                        - link "News" [ref=e749] [cursor=pointer]:
+                          - /url: /news
+                          - paragraph [ref=e751]: News
+                      - listitem [ref=e752]:
+                        - link "Careers" [ref=e753] [cursor=pointer]:
+                          - /url: /careers
+                          - paragraph [ref=e755]: Careers
+                      - listitem [ref=e756]:
+                        - link "Contact Sales" [ref=e757] [cursor=pointer]:
+                          - /url: /m/demo
+                          - paragraph [ref=e759]: Contact Sales
+            - generic [ref=e761]:
+              - generic [ref=e762]:
+                - generic [ref=e764]: © 2026 Builder.io, Inc.
+                - link "Security" [ref=e765] [cursor=pointer]:
+                  - /url: /c/security
+                  - paragraph [ref=e767]: Security
+                - link "Privacy Policy" [ref=e768] [cursor=pointer]:
+                  - /url: /legal/privacy
+                  - paragraph [ref=e770]: Privacy Policy
+                - link "SaaS Terms" [ref=e771] [cursor=pointer]:
+                  - /url: /legal/terms
+                  - paragraph [ref=e773]: SaaS Terms
+                - link "Trust Center" [ref=e774] [cursor=pointer]:
+                  - /url: https://trust.builder.io/
+                  - paragraph [ref=e776]: Trust Center
+                - paragraph [ref=e779] [cursor=pointer]: Cookie Preferences
+              - generic [ref=e780]:
+                - link [ref=e781] [cursor=pointer]:
+                  - /url: https://www.youtube.com/@Builderio
+                - link [ref=e782] [cursor=pointer]:
+                  - /url: https://github.com/builderio/builder
+                - link [ref=e783] [cursor=pointer]:
+                  - /url: https://bsky.app/profile/builderio.bsky.social
+                - link [ref=e784] [cursor=pointer]:
+                  - /url: https://twitter.com/builderio
+                - link [ref=e785] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/builder-io/
+                - link [ref=e786] [cursor=pointer]:
+                  - /url: /blog/feed.xml
